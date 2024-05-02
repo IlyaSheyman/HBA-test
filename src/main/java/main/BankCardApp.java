@@ -77,7 +77,7 @@ public class BankCardApp {
 
             return createCardWithBonus(initialBalance, creditLimit, scanner, "credit");
         } else {
-            System.out.println("Неправильный выбор");
+            System.out.println("Неизвестная команда");
             System.exit(1);
             return null;
         }
@@ -148,7 +148,7 @@ public class BankCardApp {
                 throw new UnknownTypeException("Неизвестный тип карты");
             }
         } else {
-            System.out.println("Неправильный выбор");
+            System.out.println("Неизвестная команда");
             System.exit(1);
         }
         return createCard(initialBalance, creditLimit, type, bonusProgram);

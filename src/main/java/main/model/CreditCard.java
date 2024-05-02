@@ -16,12 +16,8 @@ public class CreditCard extends BankCard {
     public void topUp(BigDecimal amount) {
         BigDecimal creditLimit = BigDecimal.valueOf(CREDIT_CARD_LIMIT);
         if (credit.compareTo(creditLimit) >= 0) {
-            // Если текущий кредит превышает или равен кредитному лимиту,
-            // пополнение добавляется на баланс
             balance = balance.add(amount);
         } else {
-            // Если доступный кредит ниже кредитного лимита,
-            // то пополнение делится между кредитом и балансом
             BigDecimal remainingCreditLimit = creditLimit.subtract(credit);
 
             if (amount.compareTo(remainingCreditLimit) > 0) {
@@ -39,8 +35,10 @@ public class CreditCard extends BankCard {
         if (balance.compareTo(amount) >= 0) {
             balance = balance.subtract(amount);
             return true;
-        } else if (credit.compareTo(amount) >= 0) {
-            credit = credit.subtract(amount);
+        } else if (balance.add(credit).compareTo(amount) >= 0) {
+            BigDecimal remainingAmount = amount.subtract(balance);
+            balance = BigDecimal.ZERO;
+            credit = credit.subtract(remainingAmount);
             return true;
         } else {
             return false;
